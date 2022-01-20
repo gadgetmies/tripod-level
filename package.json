@@ -1,0 +1,12 @@
+{
+  "name": "tripod-level",
+  "version": "0.1.0",
+  "description": "Tool for easy leveling of a camera tripod",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server docs && ngrok http -bind-tls=true localhost:8080",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gadgetmies",
+  "license": "MIT"
+}

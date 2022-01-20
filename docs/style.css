@@ -1,0 +1,16 @@
+body {
+    background-color: black;
+}
+
+.circle {
+    stroke: rgb(255, 0, 0);
+    stroke-width: 2;
+}
+
+.centered {
+    stroke: rgb(0, 255, 0);
+}
+
+.line {
+    fill: rgb(255, 0, 0);
+}
