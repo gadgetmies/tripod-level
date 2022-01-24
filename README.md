@@ -4,6 +4,8 @@ Tool for easy leveling of a camera tripod with (or without) a half ball leveler.
 
 Currently works only on iOS (tested with iPhone) and in landscape mode.
 
+Give it a spin: https://gadgetmies.github.io/tripod-level/
+
 ## Instructions
 
 1. Open the app in the browser on your iOS device.
