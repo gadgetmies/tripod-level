@@ -4,6 +4,7 @@ const centerCircle = document.getElementById('center-circle')
 const horizontalLine = document.getElementById('horizontal-line')
 const verticalLine = document.getElementById('vertical-line')
 const centeredClassName = 'centered'
+const centerLimit = 0.1
 
 function setClass(element, className, hasClass) {
   if (hasClass) {
@@ -19,8 +20,8 @@ function handleOrientationChange(beta, gamma) {
   moveElement(verticalLine, clamp(vertical / 90 * 100, -50, 50), 0)
   moveElement(horizontalLine, 0, clamp(horizontal / 90 * 100, -50, 50))
 
-  const verticallyCentered = Math.abs(vertical) < 1
-  const horizontallyCentered = Math.abs(horizontal) < 1
+  const verticallyCentered = Math.abs(vertical) < centerLimit
+  const horizontallyCentered = Math.abs(horizontal) < centerLimit
 
   setClass(horizontalLine, centeredClassName, horizontallyCentered)
   setClass(verticalLine, centeredClassName, verticallyCentered)
