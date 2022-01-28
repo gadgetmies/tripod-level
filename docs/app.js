@@ -20,21 +20,87 @@ function handleOrientationChange(beta, gamma) {
   }
 }
 
-function initialize() {
-  DeviceMotionEvent.requestPermission().then(response => {
-    if (response == 'granted') {
-      document.getElementById('consent').style.display = 'none'
-      document.getElementById('content').style.display = 'block'
+const [android, ios, windows] = [...Array(3).keys()]
 
-      window.addEventListener('deviceorientation', (event) => {
-        handleOrientationChange(event.beta, event.gamma)
-      })
+function getMobileOperatingSystem() {
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera
+
+  if (/windows phone/i.test(userAgent)) {
+    return windows
+  }
+
+  if (/android/i.test(userAgent)) {
+    return android
+  }
+
+  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+    return ios
+  }
+
+  return undefined
+}
+
+const getDisplay = (visible) => visible ? 'block' : 'none'
+const setElementVisible = (element, visible) => element.style.display = getDisplay(visible)
+const setElementWithIdVisible = (id, visible) => setElementVisible(document.getElementById(id), visible)
+
+const consentId = 'consent'
+const contentId = 'content'
+const errorId = 'error'
+
+function setLevelVisible(visible) {
+  setElementWithIdVisible(consentId, !visible)
+  setElementWithIdVisible(contentId, visible)
+}
+
+function showError(error) {
+  const errorElement = document.getElementById(errorId)
+  setElementVisible(errorElement, true)
+  setElementWithIdVisible(consentId, false)
+  setElementWithIdVisible(contentId, false)
+  error.innerText = error
+}
+
+async function initialize() {
+  const os = getMobileOperatingSystem()
+  try {
+    switch (os) {
+      case ios: {
+        const response = await DeviceMotionEvent.requestPermission()
+        if (response !== 'granted') {
+          showError('Permission to use accelerometer sensor is denied.')
+          return
+        }
+        break;
+      }
+      case android: {
+        const { state } = await navigator.permissions.query({ name: 'accelerometer' })
+        if (state === 'denied') {
+          showError('Permission to use accelerometer sensor is denied.')
+          return
+        }
+        break;
+      }
+      default:
+        showError('Unsupported platform')
+        return
     }
-  })
+
+    setLevelVisible(true)
+    window.addEventListener('deviceorientation', (e) => {
+      handleOrientationChange(e.beta, e.gamma)
+    })
+  } catch (e) {
+    if (e.error) {
+      showError(e.toString())
+    } else {
+      console.error(e)
+    }
+  }
 }
 
 console.log('Starting accelerometer')
-initialize()
+initialize().then(() => console.log('Initialization done'))
 
 function moveElement(domElement, xOffset, yOffset) {
   if (domElement) {

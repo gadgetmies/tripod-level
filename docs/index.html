@@ -1,25 +1,27 @@
 <html>
 <head>
-    <title>Tripod level</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:image" content="icons/icon-512.png">
-    <link rel="icon" href="favicon.ico">
-    <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="tripod-level.webmanifest">
-    <script src="app.js" defer></script>
+  <title>Tripod level</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:image" content="icons/icon-512.png">
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="tripod-level.webmanifest">
+  <script src="app.js" defer></script>
 </head>
 <main>
-    <section id="consent">
-        <button onClick="initialize()">Grant access to accelerometer</button>
-    </section>
-    <section id="content" style="display: none">
-        <svg id="level" viewBox="-50 -50 100 100" style="width: 100%; height: 100%">
-            <circle cx="0" cy="0" r="48" id="circle" class="circle" />
-            <circle cx="0" cy="0" r="5" id="center-circle" class="circle" />
-            <rect x="-50" y="-0.5" width="100" height="1" id="horizontal-line" class="line" />
-            <rect x="-0.5" y="-50" width="1" height="100" id="vertical-line" class="line" />
-        </svg>
-    </section>
+  <section id="consent">
+    <button onClick="initialize()">Grant access to accelerometer</button>
+  </section>
+  <section id="content" style="display: none">
+    <svg id="level" viewBox="-50 -50 100 100" style="width: 100%; height: 100%">
+      <circle cx="0" cy="0" r="48" id="circle" class="circle"/>
+      <circle cx="0" cy="0" r="5" id="center-circle" class="circle"/>
+      <rect x="-50" y="-0.5" width="100" height="1" id="horizontal-line" class="line"/>
+      <rect x="-0.5" y="-50" width="1" height="100" id="vertical-line" class="line"/>
+    </svg>
+  </section>
+  <section id="error">
+  </section>
 </main>
 </body>
 </html>
