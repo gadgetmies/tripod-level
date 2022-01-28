@@ -3,7 +3,15 @@ const clamp = (num, min, max) => Math.min(Math.max(num, min), max)
 const centerCircle = document.getElementById('center-circle')
 const horizontalLine = document.getElementById('horizontal-line')
 const verticalLine = document.getElementById('vertical-line')
-let centered = false
+const centeredClassName = 'centered'
+
+function setClass(element, className, hasClass) {
+  if (hasClass) {
+    element.classList.add(className)
+  } else {
+    element.classList.remove(className)
+  }
+}
 
 function handleOrientationChange(beta, gamma) {
   const vertical = beta > 90 ? 180 - beta : beta < -90 ? -180 - beta : beta
@@ -11,13 +19,12 @@ function handleOrientationChange(beta, gamma) {
   moveElement(verticalLine, clamp(vertical / 90 * 100, -50, 50), 0)
   moveElement(horizontalLine, 0, clamp(horizontal / 90 * 100, -50, 50))
 
-  if (!centered && Math.abs(vertical) < 1 && Math.abs(horizontal) < 1) {
-    centered = true
-    centerCircle.classList.add('centered')
-  } else if (centered) {
-    centered = false
-    centerCircle.classList.remove('centered')
-  }
+  const verticallyCentered = Math.abs(vertical) < 1
+  const horizontallyCentered = Math.abs(horizontal) < 1
+
+  setClass(horizontalLine, centeredClassName, horizontallyCentered)
+  setClass(verticalLine, centeredClassName, verticallyCentered)
+  setClass(centerCircle, centeredClassName, verticallyCentered && horizontallyCentered)
 }
 
 const [android, ios, windows] = [...Array(3).keys()]
